@@ -41,21 +41,18 @@ class Game:
 	def create_pairs(self):
 		if int(len(self.heroes) / 2) % 2 != 0:
 			self.heroes.append(random.choice(self.reserve_players))
+
 		random.shuffle(self.heroes)
 
 		first_team = self.heroes[:int(len(self.heroes) / 2) + 1]
 		second_team = self.heroes[int(len(self.heroes) / 2):]
-
-		pairs_list = []
 
 		for first, second in zip(first_team, second_team):
 			first_player = first.nick 
 			second_player = second.nick 
 
 			print(f'{first_player} vs {second_player}')
-			pairs_list.append([first_player,second_player])
-		for pair in pairs_list:
-			self.start_versus(pair[0], pair[1])
+			self.start_versus(first_player,second_player)
 
 
 hero_l = [Hero.get_rage_mode('Oxxxymiron',120),Hero('Rickey F',20),Hero('MAYOT',250)]
