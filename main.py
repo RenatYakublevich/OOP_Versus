@@ -1,5 +1,4 @@
 import random
-from itertools import zip_longest
 
 
 class Hero:
@@ -11,19 +10,20 @@ class Hero:
 	def get_rage_mode(cls, nick, power):
 		return cls(nick, power + 100)
 
+
 class Game:
 	reserve_players = [
-		Hero('Galat',50),
-		Hero('МС Пох',125),
-		Hero('Jubilee',5),
-		Hero('SODA Luv',75)
+		('Galat',50),
+		('МС Пох',125),
+		('Jubilee',5),
+		('SODA Luv',75)
 	]
 	def __init__(self, heroes):
 		self.heroes = heroes
 
-	def start_game(self):
+	def show_top_rating(self):
 		self.heroes.sort(key=lambda x: x.power,reverse=True)
-
+		print('\nРейтинг: ')
 		for count, hero in enumerate(self.heroes):
 			print(f'#{count + 1} - {hero.nick}')
 
@@ -40,7 +40,7 @@ class Game:
 
 	def create_pairs(self):
 		if int(len(self.heroes) / 2) % 2 != 0:
-			self.heroes.append(random.choice(self.reserve_players))
+			self.heroes.append(Hero(*random.choice(self.reserve_players))) if random.randint(1,2) == 1 else self.heroes.append(Hero.get_rage_mode(*random.choice(self.reserve_players)))
 
 		random.shuffle(self.heroes)
 
@@ -55,6 +55,7 @@ class Game:
 			self.start_versus(first_player,second_player)
 
 
-hero_l = [Hero.get_rage_mode('Oxxxymiron',120),Hero('Rickey F',20),Hero('MAYOT',250)]
+hero_l = [Hero.get_rage_mode('Oxxxymiron',120),Hero.get_rage_mode('Rickey F',20),Hero('MAYOT',250)]
 game = Game(hero_l)
 game.create_pairs()
+game.show_top_rating()
